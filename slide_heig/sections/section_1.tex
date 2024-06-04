@@ -1,0 +1,50 @@
+% !TEX root = ../main.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ZHAW BEAMER
+% section
+% 
+% Authors:
+% Martin Oswald
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------
+%   SECTION TITLE
+%----------------------------------------
+\section{Introduction}
+\label{sec:introduction}
+\frame[plain]{\sectionpage}
+
+
+%----------------------------------------
+%   SECTION CONTENT
+%----------------------------------------
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item<1-> This is a bullet point.
+        \item<2-> This point will appear second.
+        \item<3-> And this third.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Adding Images}
+    \begin{figure}
+        \includegraphics[width=0.5\linewidth]{example-image-duck}
+        \caption{Caption under the image.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Multiple Columns}
+    \begin{columns}[T]
+        \begin{column}{.48\textwidth}
+            \textbf{Column 1}\\
+            This is the first column. You can add text, images, and even blocks here.
+        \end{column}
+        \hfill
+        \begin{column}{.48\textwidth}
+            \textbf{Column 2}\\
+            This is the second column. It's useful for comparing two sets of information or for showing text and an image side by side.
+            you can also cite stuff \cite{LeCun2015DeepLearning}
+        \end{column}
+    \end{columns}
+\end{frame}

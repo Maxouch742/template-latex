@@ -18,16 +18,16 @@
         \usebeamerfont{subtitle}\insertsubtitle\par
 
         \vskip 3em
-        
+
         \usebeamerfont{author}\insertauthor\par
         \usebeamerfont{date}\insertdate\par
         \vskip \@lrmargin
-        
+
     \end{beamercolorbox}
-    
+
     \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=0,outer sep=\@lrmargin}]
         \node[anchor=north east] at (current page.north east){
-                \includegraphics[width=30mm, height=30mm]{zhawbeamer/zhaw_logo_white.png}
+            \includegraphics[width=35mm]{zhawbeamer/hesso_logo_CMYK_blanc.png}
         };
     \end{tikzpicture}
 }
@@ -45,7 +45,7 @@
 
     \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=\@ftitlemargin,outer sep=0}]
         \node[anchor=north east] at (current page.north east){
-                \includegraphics[width=\@ftitleheight-\@ftitlemargin-\@ftitlemargin, height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/zhaw_logo_blue.png}
+            \includegraphics[height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/hesso_logo_RGB.png}
         };
     \end{tikzpicture}
 }
@@ -67,15 +67,15 @@
     \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth, rightskip=\@ftitleheight, leftskip=\@ftitlemargin, ht=\@ftitleheight]{frametitle}
         \vbox to \@ftitleheight{
-        \vfill
-        \usebeamerfont{frametitle}\insertframetitle\par
-        \vfill
+            \vfill
+            \usebeamerfont{frametitle}\insertframetitle\par
+            \vfill
         }
     \end{beamercolorbox}
-    
+
     \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=\@ftitlemargin,outer sep=0}]
         \node[anchor=north east] at (current page.north east){
-                \includegraphics[width=\@ftitleheight-\@ftitlemargin-\@ftitlemargin, height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/zhaw_logo_white.png}
+            \includegraphics[height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/hesso_logo_CMYK_blanc.png}
         };
     \end{tikzpicture}
 }

@@ -13,7 +13,7 @@
 \setbeamertemplate{title page}{
     \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight,leftskip=\@lrmargin,rightskip=\@lrmargin]{title page}
-        {\usebeamerfont{title}\inserttitle\par}
+        {\usebeamerfont{title}\LARGE\inserttitle\par}
         \rule{\textwidth}{0.7mm}
         \usebeamerfont{subtitle}\insertsubtitle\par
 
@@ -27,7 +27,7 @@
 
     \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=0,outer sep=\@lrmargin}]
         \node[anchor=north east] at (current page.north east){
-            \includegraphics[width=35mm]{zhawbeamer/hesso_logo_CMYK_blanc.png}
+            \includegraphics[width=35mm]{zhawbeamer/hesso_logo_CMYK_blanc_crop.png}
         };
     \end{tikzpicture}
 }
@@ -38,14 +38,14 @@
 \setbeamertemplate{section page}{
     \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight,leftskip=\@lrmargin,rightskip=\@lrmargin]{section page}
-        {\usebeamerfont{section}\insertsection\par}
+        {\usebeamerfont{section}\LARGE\insertsection\par}
         \rule{\textwidth}{0.7mm}
         \vskip 5em
     \end{beamercolorbox}
 
     \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=\@ftitlemargin,outer sep=0}]
         \node[anchor=north east] at (current page.north east){
-            \includegraphics[height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/hesso_logo_RGB.png}
+            \includegraphics[height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/hesso_logo_RGB_crop.png}
         };
     \end{tikzpicture}
 }
@@ -75,7 +75,7 @@
 
     \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=\@ftitlemargin,outer sep=0}]
         \node[anchor=north east] at (current page.north east){
-            \includegraphics[height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/hesso_logo_CMYK_blanc.png}
+            \includegraphics[height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/hesso_logo_CMYK_blanc_crop.png}
         };
     \end{tikzpicture}
 }

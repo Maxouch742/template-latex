@@ -29,16 +29,16 @@ Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel mas
 \begin{table}
     \begin{tabular}{c|c|c|c|c}
         \toprule
-        Méthode                       & Absolu & Relatif & Observation  & Précision \\
+        Méthode                             & Absolu & Relatif & Observation  & Précision      \\
         \midrule
-        SPP Single Point Positioning  & x      &         & Code         & 5-10 m  \\
-        PPP Precise Point Positioning & x      &         & Code + Phase & 0.05-0.20 m  \\
-        Code différentiel             &        & x       & Code         & 0.5-1.0 m  \\
-        Phase différentiel (\acrshort{rtk})      &        & x       & Phase        & 0.02 m + 2 ppm  \\
+        SPP Single Point Positioning        & x      &         & Code         & 5-10 m         \\
+        PPP Precise Point Positioning       & x      &         & Code + Phase & 0.05-0.20 m    \\
+        Code différentiel                   &        & x       & Code         & 0.5-1.0 m      \\
+        Phase différentiel (\acrshort{rtk}) &        & x       & Phase        & 0.02 m + 2 ppm \\
         \bottomrule
     \end{tabular}
     \caption{Méthodes de positionnement en temps réel}
-    \label{tab:Positionnement temps réel} 
+    \label{tab:Positionnement temps réel}
 \end{table}
 
 Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
@@ -50,17 +50,34 @@ Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis
     D_r^s = \frac{1}{\lambda} \cdot \left(\frac{\mathbf{v}^s}{c}-\mathbf{e}\right) \cdot (\mathbf{v}^s -\mathbf{v}_r) + ({df}_r - {df}^s) + \frac{c}{\lambda} \cdot \delta f_{clk}^{rel}
 \end{equation}
 Avec :
-% [D_r^s] Mesure Doppler entre un satellite $s$ et un récepteur $r$ [Hz]
-% [f_r] Fréquence de réception [Hz]
-% [f^s] Fréquence d'émission [Hz]
-% [c] Vitesse de la lumière dans le vide $\left[\frac{\text{m}}{\text{s}}\right]$
-% [\mathbf{e}^i] Vecteur en direction du satellite depuis le récepteur
-% [\lambda] Longueur d'onde du signal observé [m]
-% [\mathbf{v}^s] Vecteur vitesse du satellite $\left[\frac{\text{m}}{\text{s}}\right]$
-% [\mathbf{v}_r] Vecteur vitesse du récepteur $\left[\frac{\text{m}}{\text{s}}\right]$
-% [{df}_r] Erreur de fréquence du récepteur [Hz]
-% [{df}^s] Erreur de fréquence du satellite [Hz]
-% [\delta f_{clk}^{rel}] Effets relativistes
+\begin{conditions*}
+    D_r^s                & Mesure Doppler entre un satellite $s$ et un récepteur $r$ [Hz] \\
+    f_r                  & Fréquence de réception [Hz] \\
+    f^s                  & Fréquence d'émission [Hz] \\
+    c                    & Vitesse de la lumière dans le vide $\left[\frac{\text{m}}{\text{s}}\right]$ \\
+    \mathbf{e}^i         & Vecteur en direction du satellite depuis le récepteur \\
+    \lambda              & Longueur d'onde du signal observé [m] \\
+    \mathbf{v}^s         & Vecteur vitesse du satellite $\left[\frac{\text{m}}{\text{s}}\right]$ \\
+    \mathbf{v}_r         & Vecteur vitesse du récepteur $\left[\frac{\text{m}}{\text{s}}\right]$ \\
+    {df}_r               & Erreur de fréquence du récepteur [Hz] \\
+    {df}^s               & Erreur de fréquence du satellite [Hz] \\
+    \delta f_{clk}^{rel} & Effets relativistes \\
+\end{conditions*}
+Avec :
+
+\begin{conditionsymbol*}
+    D_r^s                & =    & Mesure Doppler entre un satellite $s$ et un récepteur $r$ [Hz] \\
+    f_r                  & =    & Fréquence de réception [Hz] \\
+    f^s                  & =    & Fréquence d'émission [Hz] \\
+    c                    & =    & Vitesse de la lumière dans le vide $\left[\frac{\text{m}}{\text{s}}\right]$ \\
+    \mathbf{e}^i         & =    & Vecteur en direction du satellite depuis le récepteur \\
+    \lambda              & \sim & Longueur d'onde du signal observé [m] \\
+    \mathbf{v}^s         & =    & Vecteur vitesse du satellite $\left[\frac{\text{m}}{\text{s}}\right]$ \\
+    \mathbf{v}_r         & =    & Vecteur vitesse du récepteur $\left[\frac{\text{m}}{\text{s}}\right]$ \\
+    {df}_r               & \sim & Erreur de fréquence du récepteur [Hz] \\
+    {df}^s               & \sim & Erreur de fréquence du satellite [Hz] \\
+    \delta f_{clk}^{rel} & \sim & Effets relativistes \\
+\end{conditionsymbol*}
 
 
 \begin{equation}

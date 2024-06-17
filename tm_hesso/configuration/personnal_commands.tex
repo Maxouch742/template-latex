@@ -1,3 +1,14 @@
 \setlength{\parindent}{0pt} % Définir le retrait du paragraphe à 0pt (pas de retrait)
 \newcommand{\clearemptydoublepage}{%
   \newpage{\thispagestyle{empty}\cleardoublepage}}
+
+% Description des paramètres des équations
+\newenvironment{conditions*}
+{\par\vspace{\abovedisplayskip}\noindent
+\tabularx{\columnwidth}{>{$}l<{$} @{${}={}$} >{\raggedright\arraybackslash}X}}
+  {\endtabularx\par\vspace{\belowdisplayskip}}
+
+  \newenvironment{conditionsymbol*}
+  {\par\vspace{\abovedisplayskip}\noindent
+  \tabularx{\columnwidth}{>{$}l<{$} @{}>{${}}c<{{}$}@{} >{\raggedright\arraybackslash}X}}
+{\endtabularx\par\vspace{\belowdisplayskip}}

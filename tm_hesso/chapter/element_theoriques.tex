@@ -1,0 +1,196 @@
+\chapter{Éléments théoriques}
+
+\section{Introduction d'éléments théoriques}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.\\
+Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam. Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi vel erat non mauris convallis vehicula. Nulla et sapien. Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. Mauris ullamcorper felis vitae erat. Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.
+
+\begin{center}
+    \begin{longtable}{ll}
+        \caption{Paramètres de calcul}\label{tab:Paramètres calcul tangent bruit saut}    \\
+        \toprule
+        Paramètre             & Valeur \tabularnewline
+        \midrule
+        \endhead
+        Etat plateforme       & Statique et en mouvement\tabularnewline
+        Date                  & 24.06.2020 \tabularnewline
+        Début                 & UTC 14h 29min 24sec \tabularnewline
+        Fin                   & UTC 14h 30min 15sec \tabularnewline
+        Nb époques            & 51\tabularnewline
+        Position approchée    & Positionnement absolu sur le code \tabularnewline
+        Bruit                 & Oui (1m sur le code, 0.002 m sur la phase)\tabularnewline
+        Sauts de cycles       & Oui \tabularnewline
+        Quaternions approchés & Helmert 3D  \tabularnewline
+        Estimation flottante  & Quaternions libérés, ambiguïtés libérées \tabularnewline
+        Estimation fixe       & Quaternions libérés, ambiguïtés fixées \tabularnewline
+        \bottomrule
+    \end{longtable}
+\end{center}
+
+\begin{table}
+    \begin{tabular}{c|c|c|c|c}
+        \toprule
+        Méthode                       & Absolu & Relatif & Observation  & Précision \\
+        \midrule
+        SPP Single Point Positioning  & x      &         & Code         & 5-10 m  \\
+        PPP Precise Point Positioning & x      &         & Code + Phase & 0.05-0.20 m  \\
+        Code différentiel             &        & x       & Code         & 0.5-1.0 m  \\
+        Phase différentiel (\acrshort{rtk})      &        & x       & Phase        & 0.02 m + 2 ppm  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Méthodes de positionnement en temps réel}
+    \label{tab:Positionnement temps réel} 
+\end{table}
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+\begin{equation}
+    f_r = f^s \cdot \left(\frac{1+ \left(\frac{\mathbf{e}\cdot v_r}{c}\right)}{1+ \left(\frac{\mathbf{e}\cdot v_s}{c}\right)}\right)
+\end{equation}
+\begin{equation}
+    D_r^s = \frac{1}{\lambda} \cdot \left(\frac{\mathbf{v}^s}{c}-\mathbf{e}\right) \cdot (\mathbf{v}^s -\mathbf{v}_r) + ({df}_r - {df}^s) + \frac{c}{\lambda} \cdot \delta f_{clk}^{rel}
+\end{equation}
+Avec :
+% [D_r^s] Mesure Doppler entre un satellite $s$ et un récepteur $r$ [Hz]
+% [f_r] Fréquence de réception [Hz]
+% [f^s] Fréquence d'émission [Hz]
+% [c] Vitesse de la lumière dans le vide $\left[\frac{\text{m}}{\text{s}}\right]$
+% [\mathbf{e}^i] Vecteur en direction du satellite depuis le récepteur
+% [\lambda] Longueur d'onde du signal observé [m]
+% [\mathbf{v}^s] Vecteur vitesse du satellite $\left[\frac{\text{m}}{\text{s}}\right]$
+% [\mathbf{v}_r] Vecteur vitesse du récepteur $\left[\frac{\text{m}}{\text{s}}\right]$
+% [{df}_r] Erreur de fréquence du récepteur [Hz]
+% [{df}^s] Erreur de fréquence du satellite [Hz]
+% [\delta f_{clk}^{rel}] Effets relativistes
+
+
+\begin{equation}
+    \boxed{
+    P^{i}_{A} + {\hat{v}}_{P^{i}_{A}} = |\textbf{x}^i - {\hat{\textbf{x}}}_A| + c \cdot \hat{\delta t}^{rec_A}_{rec} - c \cdot {\delta t}^{sat_i}_{em} + \delta \rho^{i}_{A,trop} + \delta \rho^{i}_{A,iono}
+    }
+    \label{eq_obs_pseudodistance}
+\end{equation}
+
+\begin{equation}
+    \mathbf{C} =
+    \bordermatrix{
+        & \hat{x_B}_1 & \hat{y_B}_1 & \hat{z_B}_1 & \hat{x_B}_2 & \hat{y_B}_2 & \hat{z_B}_2 & \ldots & \nabla \Delta \hat{N}^{ij}_{AB} & \nabla \Delta \hat{N}^{ik}_{AB} & \nabla \Delta \hat{N}^{il}_{AB} & \ldots & \nabla \Delta \hat{N^{iz}_{AB}}_n\cr
+        \nabla \Delta \hat{N^{ij}_{AB}} & - & - & - & - & - & - & \ldots & 1 & - & - & - & -\cr
+        \nabla \Delta \hat{N^{ik}_{AB}} & - & - & - & - & - & - & \ldots & - & 1 & - & - & -\cr
+        \nabla \Delta \hat{N^{il}_{AB}} & - & - & - & - & - & - & \ldots & - & - & 1 & - & -\cr
+        \vdots & - & - & - & - & - & - & \ddots & - & - & - & \ddots & - \cr
+        \nabla \Delta \hat{N^{iz}_{AB}} & - & - & - & - & - & - & \ldots & - & - & - & - & 1\cr
+    }
+\end{equation}
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+\begin{figure}[ht]
+    \begin{lstlisting}[language=Json]
+    {
+        "1680262162.9": {
+            "gnss": {
+                "timestamp": [
+                    1680262162000.0,
+                    1680262162100.0, 
+                    1680262162900.0
+                ],
+                "longitude": [
+                    6.656051646773433,
+                    6.656051874781411,
+                    6.656076635597395
+                ],
+                "latitude": [
+                    46.77854614906064,
+                    46.77854619764593,
+                    46.77855147382547
+                ],
+                "altitude": [
+                    435.8,
+                    435.8,
+                    435.8
+                ]
+            }
+        },
+    }
+    \end{lstlisting}
+    \caption{Structure de données des trajectoires}\label{fig:fichier_Json}
+\end{figure}
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.\\
+
+\begin{lstlisting}[language=Python, caption=Exemple de fonction Python,captionpos=t]
+import numpy as np
+    
+def incmatrix(genl1,genl2):
+    m = len(genl1)
+    n = len(genl2)
+    M = None #to become the incidence matrix
+    
+    return M
+\end{lstlisting}
+
+\begin{center}
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[node distance=3cm]
+            \tikzstyle{etapes} = [rectangle, rounded corners,
+            minimum width=1cm,
+            minimum height=1cm,
+            text centered,
+            draw=black,
+            fill=white!30]
+            \definecolor{myblue}{RGB}{0, 0, 225}
+            \tikzstyle{arrow} = [thick,->,>=stealth,myblue ]
+            \node (etape1)[etapes]{WGS84};
+            \node (etape2)[etapes, below of=etape1]{\begin{tabular}{c}\large WGS84 - ellipsoïdale\\ \large ($\mathbf{\lambda}^{\text{WGS84}}$,$\mathbf{\varphi}^{\text{WGS84}}$,$\mathit{h}^{\text{WGS84}}$)\end{tabular}};
+            \node (etape3)[etapes, below of=etape2] {\begin{tabular}{c} \large UTM - altitude ellipsoïdale\\ \large($\mathit{E}^{\text{UTM}}$,$\mathit{N}^{\text{UTM}}$,$\mathit{h}^{\text{UTM}}$)\end{tabular}};
+            \node (etape4)[etapes, below of=etape3] {\begin{tabular}{c} \large UTM-red\\ \large ($\mathit{E}^{\text{UTM-red}}$,$\mathit{N}^{\text{UTM-red}}$,$\mathit{h}^{\text{UTM-red}}$)\end{tabular}};
+            \node (etape5)[etapes, below of=etape4] {\begin{tabular}{c}\large Unity\\ \large (x,y,z)\end{tabular}};
+
+            \draw [arrow] (etape1) -- (etape2);
+            \draw [arrow] (etape2) -- (etape3);
+            \draw [arrow] (etape3) -- (etape4);
+            \draw [arrow] (etape2) -- node[anchor=west,myblue] {\normalsize 1) Projection basée sur la
+                projection de Mercator transverse ellipsoïdale} (etape3);
+            \draw [arrow] (etape3) -- node[anchor=west,myblue] {\normalsize 2) 3 Translations} (etape4);
+            \draw [arrow] (etape4) -- node[anchor=west,myblue] {\normalsize 3) Système de coordonnées main gauche } (etape5);
+        \end{tikzpicture}
+        \caption{WGS84 vers Unity}
+    \end{figure}
+\end{center}
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet. Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+\section{Blabla quotidien}
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+\vspace{10pt}
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
+
+Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.

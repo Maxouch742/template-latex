@@ -1,482 +1,115 @@
 \documentclass[twoside]{report}
-\usepackage[a4paper, margin=2cm]{geometry}
 
-%%%% Langues et encodage
-% \usepackage[utf8]{inputenc}
+
+%%%%% LANGUE ET ENCODAGE %%%%%
 \usepackage[T1]{fontenc}
 \usepackage{csquotes} % recommended to ensure that quoted texts are typeset according to the rules of your main language
 \usepackage[french]{babel}
 
-%%%% Bibliographie
-\usepackage[
-    style = iso-authoryear, % Autres possibilités : iso-numeric, iso-alphabetic, iso-authortitle
-    % giveninits=true, % Met une initiale pour les prénoms
-    % dashed = false, % Affiche à chaque fois le nom de l'auteur au lieu de le remplacer par des tirets (Seulement pour certains styles)
-    maxbibnames = 3, % Choisir le nombre max d'auteurs avant qu'il commence à mettre "et al."
-    minbibnames = 3, % Choisir le nombre de noms à écrire avant "et al."
-    % La même chose, mais pour les citations dans le texte :
-    maxcitenames=1,
-    mincitenames=1,
-    % url = false, % N'affiche pas l'url
-    doi = false, % N'affiche pas le DOI
-    pagetotal = true, % Affiche le nombre total de pages pour les livres
-]{biblatex}
-\addbibresource{bibliographie.bib}
 
-%%%% Mise en page
-\setlength{\parindent}{0pt} % Définir le retrait du paragraphe à 0pt (pas de retrait)
-\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}
-\cleardoublepage}}
-\usepackage{fancyhdr}
-\fancypagestyle{plain}{
-    \fancyhf{}
-    \renewcommand{\headrulewidth}{0pt}
-    \setlength{\headheight}{12.1638pt}
-    \fancyfoot[L]{}
-    \fancyfoot[R]{\thepage}
-}
-\fancypagestyle{preliminary}{
-    \fancyhf{} % Supprimer en-tête et pied de page
-    \renewcommand{\headrulewidth}{0pt} % Supprimer la ligne d'en-tête
-    \renewcommand{\footrulewidth}{0pt} % Supprimer la ligne de pied de page
-    \pagenumbering{gobble} % Désactiver la numérotation des pages
-}
-\fancypagestyle{fancy}{
-    \fancyhf{} % Effacer les en-têtes et pieds de page actuels
-    \renewcommand{\headrulewidth}{1pt} % Épaisseur de la ligne horizontale de l'en-tête
-    \fancyhead[LE]{\leftmark} % Nom du chapitre à gauche sur les pages paires
-    \fancyhead[RO]{\rightmark} % Nom du chapitre à droite sur les pages impaires
-    \renewcommand{\footrulewidth}{1pt} % Épaisseur de la ligne horizontale du pied de page
-    \setlength{\headheight}{12.1638pt} % Hauteur de l'en-tête
-    \fancyfoot[LE,RO]{\thepage} % Numéro de page à gauche sur les pages paires, à droite sur les pages impaires
-    \fancyfoot[C]{} % Pied de page central vide
-    \pagenumbering{arabic} % Numérotation en chiffres romains
-}
-\fancypagestyle{tablecontent}{
-    \fancyhf{} % Effacer les en-têtes et pieds de page actuels
-    \renewcommand{\headrulewidth}{1pt} % Épaisseur de la ligne horizontale de l'en-tête
-    \fancyhead[LE]{\leftmark} % Nom du chapitre à gauche sur les pages paires
-    \fancyhead[RO]{\rightmark} % Nom du chapitre à droite sur les pages impaires
-    \renewcommand{\footrulewidth}{1pt} % Épaisseur de la ligne horizontale du pied de page
-    \setlength{\headheight}{12.1638pt} % Hauteur de l'en-tête
-    \fancyfoot[LE,RO]{\thepage} % Numéro de page à gauche sur les pages paires, à droite sur les pages impaires
-    \fancyfoot[C]{} % Pied de page central vide
-    \pagenumbering{roman} % Numérotation en chiffres romains
-}
+%%%%% IMPORT CONFIG %%%%%
+\input{configuration/variables.tex}
+\input{configuration/packages.tex}
+\input{configuration/personnal_commands.tex}
 
-%%%% Tableau
-\usepackage{longtable} % Utilisé pour créer des tableaux sur plusieurs pages
-\usepackage{booktabs} % Création de ligne horizontale dans un tableau \toprule \bottomrule \midrule
-\usepackage{caption} % personnaliser les légendes de vos figures et de vos tableaux.
-\captionsetup[table]{name=Tableau}
-%%% Graphiques
-\usepackage{graphicx}
-\graphicspath{{fig/}}
 
-%%%% Divers
-\usepackage[hidelinks]{hyperref} %lien vers un site web \href, une section \label
-\usepackage{forest} % pour faire des arbres syntaxiques et des structures arborescentes
-\usepackage{amsmath}
+%%%%% DEFINE PARAMETERS FOR DOCUMENT %%%%%
+\input{configuration/define_header_footer.tex}
+\input{configuration/define_listings.tex}
+\input{configuration/define_caption.tex}
+\input{configuration/define_nomenclature.tex}
 
-%%%% Liste
-\usepackage{enumitem}
-\SetLabelAlign{myright}{\hss\llap{$#1$}} % attention interpréter comme du texte mathematique donc dependance au package amsmath
-\newlist{where}{description}{1}
-\setlist[where]{labelwidth=2cm,labelsep=1em,leftmargin=!,align=myright,font=\normalfont}
+%%%%% IMPORT GLOSSARIES/NOMENCLATURE %%%%%
+\input{acronyms.tex}
+\input{nomenclature.tex}
 
-%%%% Ajout de morceau de code
-\usepackage{listings} % pour ajouter du code avec coloration syntaxique
+%%%% TEMPLATE %%%%
+\usepackage{lipsum}
 
-\definecolor{background}{HTML}{EEEEEE}
-\definecolor{delim}{RGB}{20,105,176}
-\colorlet{punct}{red!60!black}
-\colorlet{numb}{magenta!60!black}
-
-\lstdefinelanguage{Json}{
-    numbers=left,
-    numberstyle=\tiny\color{codegray},
-    basicstyle=\ttfamily\footnotesize,
-    stepnumber=1,
-    numbersep=5pt,
-    showstringspaces=false,
-    breaklines=true,
-    % frame=lines,
-    backgroundcolor=\color{background},
-    literate=
-     *{0}{{{\color{numb}0}}}{1}
-      {1}{{{\color{numb}1}}}{1}
-      {2}{{{\color{numb}2}}}{1}
-      {3}{{{\color{numb}3}}}{1}
-      {4}{{{\color{numb}4}}}{1}
-      {5}{{{\color{numb}5}}}{1}
-      {6}{{{\color{numb}6}}}{1}
-      {7}{{{\color{numb}7}}}{1}
-      {8}{{{\color{numb}8}}}{1}
-      {9}{{{\color{numb}9}}}{1}
-      {:}{{{\color{punct}{:}}}}{1}
-      {,}{{{\color{punct}{,}}}}{1}
-      {\{}{{{\color{delim}{\{}}}}{1}
-      {\}}{{{\color{delim}{\}}}}}{1}
-      {[}{{{\color{delim}{[}}}}{1}
-      {]}{{{\color{delim}{]}}}}{1},
-}
-
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{background},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
-\lstset{style=mystyle}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-\begin{titlepage}
- 	\begin{flushleft}
-        \begin{figure}[ht]
-            \centering
-            \begin{minipage}[b]{0.98\textwidth}
-                \includegraphics[width=\linewidth]{cover-fractal.png}
-            \end{minipage}%
-            \begin{minipage}[b]{0.02\textwidth}
-                \hfill % Décalage horizontal
-                \rotatebox[origin=rb]{90}{Photo: XEBX}
-                \vspace*{\fill}
-            \end{minipage}
-        \end{figure}
-                    \vspace{0.5cm}
-    			{\huge \bfseries Développement d'une application smartphone de positionnement différentiel GNSS en temps réel} \vfill
-            	{\huge \textbf {Elisa Borlat}} \vfill
-            	{\Large \textbf {Juillet 2024}\\
-            	{\Large Domaine Ingénierie et Architecture}\\
-            	{\large Master conjoint UNIGE-HES-SO en développement territorial}\\
-            	{\large Orientation Ingénierie géomatique}\vfill
-            	{\small Directeur : Prof. Dr. Sébastien Guillaume\\
-                Expert : XEBX}\vfill
-                {\small Mémoire no : XEBX }}
-          \end{flushleft}
-          \vfill
-		\includegraphics[height=1.25cm]{uni_GE.png}
-		\hspace{1.5cm}
-		\includegraphics[height=1.25cm]{hesso.jpg}
-		\vfill
-\end{titlepage}
+\input{preambule/titlePage.tex}
 
-%%%% RESUME
-\clearemptydoublepage
+%%%% RESUME (FR) %%%%%
+\cleardoublepage
 \pagestyle{preliminary}
-\chapter*{Résumé}
-\thispagestyle{empty}
+\input{preambule/summary_FR.tex}
+
+%%%% RESUME (EN) %%%%%
+\cleardoublepage
+\pagestyle{preliminary}
+\input{preambule/summary_EN.tex}
+
 %%%% Remerciement
 \cleardoublepage
-\chapter*{Remerciements}
+\input{preambule/remerciements.tex}
 \thispagestyle{empty}
-%%%% AVANT-PROPOS
-\cleardoublepage
-\chapter*{Avant-propos}
-\thispagestyle{empty}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
 
-%%%% TABLE DES MATIERES
+%%%% AVANT-PROPOS %%%%%
+\cleardoublepage
+\input{preambule/preface.tex}
+
+%%%% TABLE DES MATIERES %%%%%
 \clearemptydoublepage
 \pagestyle{tablecontent}
 \tableofcontents{}
 
+%%%%% LISTE DES FIGURES %%%%%
+\clearemptydoublepage
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}
+
+%%%%% LISTE TABLEAUX %%%%%
+\clearemptydoublepage
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+
+%%%%% LISTE DES EQUATIONS %%%%%
+
+%%%%% LISTE D'ALGORITHMES %%%%%
+\clearemptydoublepage
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{\lstlistlistingname}
+
+%%%%% ABBREVIATIONS %%%%%
+\clearemptydoublepage
+\glsaddallunused%            citer toutes les abréviations non utilisées
+\printglossary[
+    type=\acronymtype,%      afficher que les abbréviations
+    title=Abréviations,%     titre du chapitre
+    toctitle=Abréviations,%  titre du chapitre dans la table des matières
+]
+
+%%%%% CONSTANTS %%%%%
+\clearemptydoublepage
+\printnomenclature
+\addcontentsline{toc}{chapter}{\nomname}
+
 %%%%% INTRODUCTION %%%%%
 \clearemptydoublepage
 \pagestyle{fancy}
-\chapter*{Introduction}
-\addcontentsline{toc}{chapter}{Introduction}
-\markboth{INTRODUCTION}{Introduction}
-
-\section*{Contexte}
-\section*{Cahier des charges}
-
-Test pour la bibliographie (\cite{force2017using})
-Et \cite{zangenehnejad2021gnss}
+\input{chapter/introduction.tex}
 
 %%%%% CHAPITRE %%%%%
 \clearemptydoublepage
-\chapter{Éléments théoriques}
+\input{chapter/element_theoriques.tex}
 
-\section{Section 1}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.\\
-Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam. Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi vel erat non mauris convallis vehicula. Nulla et sapien. Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. Mauris ullamcorper felis vitae erat. Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.
-
-\begin{center}
-    \begin{longtable}{ll}
-        \caption{Paramètres de calcul}\label{tab:Paramètres calcul tangent bruit saut}\\
-        \toprule
-            Paramètre & Valeur \tabularnewline
-        \midrule
-        \endhead 
-            Etat plateforme & Statique et en mouvement\tabularnewline
-            Date & 24.06.2020 \tabularnewline
-            Début & UTC 14h 29min 24sec \tabularnewline
-            Fin & UTC 14h 30min 15sec \tabularnewline
-            Nb époques & 51\tabularnewline
-            Position approchée & Positionnement absolu sur le code \tabularnewline
-            Bruit & Oui (1m sur le code, 0.002 m sur la phase)\tabularnewline
-            Sauts de cycles & Oui \tabularnewline
-            Quaternions approchés & Helmert 3D  \tabularnewline
-            Estimation flottante & Quaternions libérés, ambiguïtés libérées \tabularnewline
-            Estimation fixe & Quaternions libérés, ambiguïtés fixées \tabularnewline
-        \bottomrule
-    \end{longtable}
-\end{center}
-
-\begin{center}
-    \begin{longtable}{c|c|c|c|c}
-        \caption{Méthodes de positionnement en temps réel}\label{tab:Positionnement temps réel}\\
-        \toprule
-             Méthode & Absolu & Relatif & Observation & Précision\tabularnewline
-        \midrule
-        \endhead 
-            SPP Single Point Positioning & x & & Code & 5-10 m\tabularnewline
-            PPP Precise Point Positioning & x & & Code + Phase & 0.05-0.20 m\tabularnewline
-            Code différentiel & & x & Code & 0.5-1.0 m\tabularnewline
-            Phase différentiel (RTK) & & x & Phase & 0.02 m + 2 ppm\tabularnewline
-        \bottomrule
-    \end{longtable}
-\end{center}
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-\begin{equation}
-f_r = f^s \cdot \left(\frac{1+ \left(\frac{\mathbf{e}\cdot v_r}{c}\right)}{1+ \left(\frac{\mathbf{e}\cdot v_s}{c}\right)}\right)
-\end{equation}
-\begin{equation}
-D_r^s = \frac{1}{\lambda} \cdot \left(\frac{\mathbf{v}^s}{c}-\mathbf{e}\right) \cdot (\mathbf{v}^s -\mathbf{v}_r) + ({df}_r - {df}^s) + \frac{c}{\lambda} \cdot \delta f_{clk}^{rel}
-\end{equation}
-Avec :
-\begin{where}
-	\item [D_r^s] Mesure Doppler entre un satellite $s$ et un récepteur $r$ [Hz]
-    \item [f_r] Fréquence de réception [Hz]
-    \item [f^s] Fréquence d'émission [Hz]
-    \item [c] Vitesse de la lumière dans le vide $\left[\frac{\text{m}}{\text{s}}\right]$
-    \item [\mathbf{e}^i] Vecteur en direction du satellite depuis le récepteur
-    \item [\lambda] Longueur d'onde du signal observé [m]
-    \item [\mathbf{v}^s] Vecteur vitesse du satellite $\left[\frac{\text{m}}{\text{s}}\right]$
-    \item [\mathbf{v}_r] Vecteur vitesse du récepteur $\left[\frac{\text{m}}{\text{s}}\right]$
-    \item [{df}_r] Erreur de fréquence du récepteur [Hz]
-    \item [{df}^s] Erreur de fréquence du satellite [Hz]
-    \item [\delta f_{clk}^{rel}] Effets relativistes
-\end{where}
-
-\begin{equation}
-\boxed{
-P^{i}_{A} + {\hat{v}}_{P^{i}_{A}} = |\textbf{x}^i - {\hat{\textbf{x}}}_A| + c \cdot \hat{\delta t}^{rec_A}_{rec} - c \cdot {\delta t}^{sat_i}_{em} + \delta \rho^{i}_{A,trop} + \delta \rho^{i}_{A,iono}
-}
-\label{eq_obs_pseudodistance}
-\end{equation}
-
-\begin{equation}
-\mathbf{C} = 
-\bordermatrix{
-    & \hat{x_B}_1 & \hat{y_B}_1 & \hat{z_B}_1 & \hat{x_B}_2 & \hat{y_B}_2 & \hat{z_B}_2 & \ldots & \nabla \Delta \hat{N}^{ij}_{AB} & \nabla \Delta \hat{N}^{ik}_{AB} & \nabla \Delta \hat{N}^{il}_{AB} & \ldots & \nabla \Delta \hat{N^{iz}_{AB}}_n\cr
-\nabla \Delta \hat{N^{ij}_{AB}} & - & - & - & - & - & - & \ldots & 1 & - & - & - & -\cr
-\nabla \Delta \hat{N^{ik}_{AB}} & - & - & - & - & - & - & \ldots & - & 1 & - & - & -\cr
-\nabla \Delta \hat{N^{il}_{AB}} & - & - & - & - & - & - & \ldots & - & - & 1 & - & -\cr
-\vdots & - & - & - & - & - & - & \ddots & - & - & - & \ddots & - \cr
-\nabla \Delta \hat{N^{iz}_{AB}} & - & - & - & - & - & - & \ldots & - & - & - & - & 1\cr
-}
-\end{equation}
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-\begin{figure}[ht]
-    \begin{lstlisting}[language=Json]
-    {
-        "1680262162.9": {
-            "gnss": {
-                "timestamp": [
-                    1680262162000.0,
-                    1680262162100.0, 
-                    1680262162900.0
-                ],
-                "longitude": [
-                    6.656051646773433,
-                    6.656051874781411,
-                    6.656076635597395
-                ],
-                "latitude": [
-                    46.77854614906064,
-                    46.77854619764593,
-                    46.77855147382547
-                ],
-                "altitude": [
-                    435.8,
-                    435.8,
-                    435.8
-                ]
-            }
-        },
-    }
-    \end{lstlisting}
-    \caption{Structure de données des trajectoires}\label{fig:fichier_Json}
-\end{figure}
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.\\
-
-\begin{lstlisting}[language=Python]
-import numpy as np
-    
-def incmatrix(genl1,genl2):
-    m = len(genl1)
-    n = len(genl2)
-    M = None #to become the incidence matrix
-    
-    return M
-\end{lstlisting}
-
-\begin{center}
-    \begin{figure}[ht]
-        \centering
-        \begin{tikzpicture}[node distance=3cm]
-            \tikzstyle{etapes} = [rectangle, rounded corners, 
-            minimum width=1cm, 
-            minimum height=1cm,
-            text centered, 
-            draw=black, 
-            fill=white!30]
-            \definecolor{myblue}{RGB}{0, 0, 225}
-            \tikzstyle{arrow} = [thick,->,>=stealth,myblue ]
-            \node (etape1)[etapes]{WGS84}; 
-            \node (etape2)[etapes, below of=etape1]{\begin{tabular}{c}\large WGS84 - ellipsoïdale\\ \large ($\mathbf{\lambda}^{\text{WGS84}}$,$\mathbf{\varphi}^{\text{WGS84}}$,$\mathit{h}^{\text{WGS84}}$)\end{tabular}};
-            \node (etape3)[etapes, below of=etape2] {\begin{tabular}{c} \large UTM - altitude ellipsoïdale\\ \large($\mathit{E}^{\text{UTM}}$,$\mathit{N}^{\text{UTM}}$,$\mathit{h}^{\text{UTM}}$)\end{tabular}};
-            \node (etape4)[etapes, below of=etape3] {\begin{tabular}{c} \large UTM-red\\ \large ($\mathit{E}^{\text{UTM-red}}$,$\mathit{N}^{\text{UTM-red}}$,$\mathit{h}^{\text{UTM-red}}$)\end{tabular}};
-            \node (etape5)[etapes, below of=etape4] {\begin{tabular}{c}\large Unity\\ \large (x,y,z)\end{tabular}};
-            
-            \draw [arrow] (etape1) -- (etape2);
-            \draw [arrow] (etape2) -- (etape3);
-            \draw [arrow] (etape3) -- (etape4);
-            \draw [arrow] (etape2) -- node[anchor=west,myblue] {\normalsize 1) Projection basée sur la
-            projection de Mercator transverse ellipsoïdale} (etape3);
-            \draw [arrow] (etape3) -- node[anchor=west,myblue] {\normalsize 2) 3 Translations} (etape4);
-            \draw [arrow] (etape4) -- node[anchor=west,myblue] {\normalsize 3) Système de coordonnées main gauche } (etape5);
-        \end{tikzpicture}
-        \caption{WGS84 vers Unity}
-    \end{figure}
-\end{center}
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet. Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-\section{Section 2}
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-\vspace{10pt}
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-Aliquam convallis sollicitudin purus. Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt mi. Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus. Curabitur eu amet.
-
-%%%%% CHAPITRE %%%%%
 \clearemptydoublepage
-\chapter{Développement de l'application}
-\section{Section 1}
+\input{chapter/exemple.tex}
 
 %%%%% CONCLUSION %%%%%
 \clearemptydoublepage
-\chapter*{Conclusion}
-\addcontentsline{toc}{chapter}{Conclusion}
+\input{chapter/conclusion.tex}
 
-%%%%% BIBLIOGRAPHIE
+%%%%% BIBLIOGRAPHIE %%%%%
 \clearemptydoublepage
+\nocite{*} % pour citer toutes les références présentes dans la bibliographie
 \printbibliography[
-heading=bibintoc, % Pour afficher la bibliographie dans la table des matières
-%title={Références}
+    heading=bibintoc, % Pour afficher la bibliographie dans la table des matières
+    %title={Références}
 ]
 
-%%%%% LISTE FIGURES
-\clearemptydoublepage
-\listoffigures
-
-%%%%% LISTE TABLEAUX
-\clearemptydoublepage
-\listoftables
-
-%%%%% ABREVIATIONS
-\clearemptydoublepage
-\chapter*{Abréviations}
-\begin{where}
-    \item [\text{GNSS}] Global Navigation Satellite System
-    \item [\text{GPS}] Global Positioning System
-    \item [\text{HEIG-VD}] Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud
-    \item [\text{IGS}] International GNSS Service
-    \item [\text{IMU}] Inertial Measurement Unit (centrale inertielle)
-    \item [\text{LAMBDA}] Least Squares Ambiguity Decorrelation Adjustement
-    \item [\text{MJD}] Modified Julian Date
-    \item [\text{PCO}] Phase Center Offset
-    \item [\text{PCV}] Phase Center Variations
-    \item [\text{PPP}] Precise Point Positioning
-    \item [\text{RINEX}] Receiver Independent Exchange Format
-    \item [\text{RTK}] Real Time Kinematic
-    \item [\text{SLAM}] Simultaneous Localization And Mapping
-    \item [\text{SBAS}] Satellite-Based Augmentation System
-    \item [\text{SPP}] Single Point Positioning
-    \item [\text{TAI}] Temps Atomique International
-    \item [\text{TEC}] Total Electron Content
-    \item [\text{TRS}] Terrestrial Reference System
-    \item [\text{UTC}] Temps Universel Coordonné
-    \item [\text{WGS84}] World Geodetic System 1984
-    \item [\text{YAML}] Yet Another Markup Language
-\end{where}
-
-%%%%% CONSTANTES
-\clearemptydoublepage
-\chapter*{Constantes}
-Les constantes utilisées dans ce projet sont tirées de (\cite{supportgeodesie}).
-\begin{where}
- \item [c] Vitesse de la lumière dans le vide : $2.99792458 \cdot 10^{8} \left[\frac{\text{m}}{\text{s}} \right]$
-    \item [a_{\text{GRS80}}] Demi-grand axe de l'ellipsoïde GRS80 : $6378137.000$ [m]
-   \item [f_{\text{GRS80}}] Applatissement de l'ellipsoïde GRS80 : $1/298.257222101$ [-]
-   \item [a_{\text{Bessel}}] Demi-grand axe de l'ellipsoïde de Bessel 1841 : $6377397.155$ [m]
-   \item [f_{\text{Bessel}}] Applatissement de l'ellipsoïde de Bessel 1841 : $1/299.1528128$ [-]
-\end{where}
-\newpage
 
 %%%%% ANNEXES
 \clearemptydoublepage
@@ -487,38 +120,38 @@ Les constantes utilisées dans ce projet sont tirées de (\cite{supportgeodesie}
 \chapter{Annexes informatiques}
 Ce rapport est accompagné des annexes informatiques suivantes :
 \begin{center}
-\begin{forest}
- for tree={
-   font=\ttfamily,
-   grow'=0,
-   child anchor=west,
-   parent anchor=south,
-   anchor=west,
-   calign=first,
-   edge path={
-     \noexpand\path [draw, \forestoption{edge}]
-     (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
-   },
-   before typesetting nodes={
-     if n=1
-       {insert before={[,phantom]}}
-       {}
-   },
-   fit=band,
-   before computing xy={l=15pt},
- }
-[text1
- [text1.1
-   [text1.1.1]
-   [text1.1.2]
-   [text1.1.3]
- ]
- [text1.2
-   [text1.2.1]
-   [text1.2.2]
- ]
-]
-\end{forest}
+    \begin{forest}
+        for tree={
+        font=\ttfamily,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        edge path={
+                \noexpand\path [draw, \forestoption{edge}]
+                (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+            },
+        before typesetting nodes={
+                if n=1
+                    {insert before={[,phantom]}}
+                    {}
+            },
+        fit=band,
+        before computing xy={l=15pt},
+        }
+        [text1
+            [text1.1
+                    [text1.1.1]
+                    [text1.1.2]
+                    [text1.1.3]
+            ]
+            [text1.2
+                    [text1.2.1]
+                    [text1.2.2]
+            ]
+        ]
+    \end{forest}
 \end{center}
 
 \end{document}

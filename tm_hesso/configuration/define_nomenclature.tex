@@ -1,0 +1,13 @@
+\renewcommand{\nomname}{Constantes}
+
+
+%% Source: https://fr.overleaf.com/learn/latex/Nomenclatures
+
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{A}{Physics Constants}{%
+  \ifstrequal{#1}{B}{Number Sets}{%
+  \ifstrequal{#1}{C}{Other Symbols}{}}}%
+]}
+\newcommand{\nomunit}[1]{%
+\renewcommand{\nomentryend}{\hspace*{\fill}#1}}

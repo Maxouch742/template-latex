@@ -1,0 +1,76 @@
+%%-----------------------------------------------------------------%%
+%%
+%%         List all the packages used in this document
+%%
+%%-----------------------------------------------------------------%%
+
+%%%%% BIBLIOGRAPHIE %%%%%
+
+%%%% Bibliographie
+%Source: https://www.overleaf.com/learn/latex/Bibliography_management_with_biblatex
+\usepackage[
+    style = iso-authoryear, % Autres possibilités : iso-numeric, iso-alphabetic, iso-authortitle
+    % giveninits=true, % Met une initiale pour les prénoms
+    % dashed = false, % Affiche à chaque fois le nom de l'auteur au lieu de le remplacer par des tirets (Seulement pour certains styles)
+    maxbibnames = 3, % Choisir le nombre max d'auteurs avant qu'il commence à mettre "et al."
+    minbibnames = 3, % Choisir le nombre de noms à écrire avant "et al."
+    % La même chose, mais pour les citations dans le texte :
+    maxcitenames=1,
+    mincitenames=1,
+    % url = false, % N'affiche pas l'url
+    doi = false, % N'affiche pas le DOI
+    pagetotal = true, % Affiche le nombre total de pages pour les livres
+]{biblatex}
+\addbibresource{bibliographie.bib}
+
+
+%%%%% MISE EN FORME %%%%%
+\usepackage{fancyhdr}
+\usepackage[inner=2cm,outer=1.5cm,top=2cm,bottom=2cm]{geometry}%  créer les marges du document pages pour la reliure en tenant compte des pages paires/impaires
+\usepackage{caption} % personnaliser les légendes de vos figures et de vos tableaux.
+
+
+%%%% Tableau
+\usepackage{multirow}%   créer des lignes sur plusieurs lignes
+\usepackage{longtable}%  Utilisé pour créer des tableaux sur plusieurs pages
+\usepackage{booktabs}%   Création de ligne horizontale dans un tableau \toprule \bottomrule \midrule
+\captionsetup[table]{name=Tableau}
+
+
+%%%%% ENVIRONNEMENTS MATHEMATIQUES %%%%%
+\usepackage{amsmath}
+\usepackage{siunitx}%   afficher les unités de manière correcte
+\usepackage{amssymb}
+
+%%% GRAPHIQUES %%%%%
+\usepackage{graphicx}
+\graphicspath{{pictures/}}
+
+
+%%%% LISTE %%%%%
+\usepackage{enumitem}
+
+
+%%%%% ALGORITHMES %%%%%
+\usepackage{listings}%    pour ajouter du code avec coloration syntaxique
+
+
+%%%%% DIVERS %%%%%
+\usepackage[hidelinks]{hyperref}%  Liens vers les références internes et externes du document
+%\usepackage{tocloft}
+\usepackage{forest} % pour faire des arbres syntaxiques et des structures arborescentes
+
+
+%%%%% GLOSSAIRE DES ABBREVIATIONS %%%%%
+\usepackage[
+    acronym,%       gestion des abbréviations
+    toc,%           ajouter le titre dans la talbe des matières
+    nonumberlist,%  supprimer les numéros de page après l'abbréviation
+]{glossaries}
+\makeglossaries
+
+
+%%%%% LISTES DES CONSTANTES %%%%%
+\usepackage{nomencl}
+\makenomenclature
+\usepackage{etoolbox}%  utiliser pour grouper les constantes physiques
